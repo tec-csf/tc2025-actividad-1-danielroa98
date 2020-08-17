@@ -11,7 +11,6 @@
 typedef struct{
     char nombre[30];
     char apellidoP[30];
-    char apellidoM[30];
     int edad;
     char noTel[15];
     int cama;
@@ -44,9 +43,6 @@ int main(int argc, char const *argv[])
         printf("Apellido paterno: ");
         scanf("%s", sup->apellidoP);
 
-        printf("Apellido materno: ");
-        scanf("%s", sup->apellidoM);
-
         printf("Edad: ");
         scanf("%d", &sup->edad);
 
@@ -70,6 +66,27 @@ int main(int argc, char const *argv[])
         
         case 1:
             printf("Caso 1\n");
+            break;
+
+        case 2:
+            printf("Caso 2\n");
+            break;
+
+        case 3:
+            printf("Caso 3\n");
+            break;
+
+        case 4:
+            printf("\nNombre del paciente \t\t Cama en la que se encuentra\n");
+
+            for (sup = hospital; sup < fin; ++sup){
+                printf("   %s %s \t\t\t\t %d \n", sup->nombre, sup->apellidoP, sup->cama);
+            }
+            
+            break;
+
+        case 5:
+            printf("Caso 5\n");
             break;
 
         default:
