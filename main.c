@@ -24,9 +24,9 @@ int main(int argc, char const *argv[])
     pacientes * sup;
 
     int beds;
-    int menu;
+    int menu = 0;
 
-    printf("Cuántos pacientes tiene registrados?");
+    printf("Cuántos pacientes tiene registrados? ");
     scanf("%d", &beds);
 
     hospital = (pacientes *) malloc(sizeof(pacientes)*beds);
@@ -56,6 +56,29 @@ int main(int argc, char const *argv[])
         printf("Cama en la que se encuentra: ");
         scanf("%d", &sup->cama);
     }
+    
+    do{
+
+    printf("\n\nEscoga una de las siguientes opciones:\n1)Añadir un paciente nuevo\n2)Checar la disponibilidad de una cama\n3)Dar de alta a un paciente\n4)Ver a los pacientes registrados\n5)Ver la disponibilidad de las camas\nPara salir, presione el botón 0\n");
+    scanf("%d", &menu);
+
+        switch (menu)
+        {
+        case 0:
+            printf("Adios\n");
+            break;
+        
+        case 1:
+            printf("Caso 1\n");
+            break;
+
+        default:
+            printf("Porfavor, elija una opción valida\n");
+            break;
+        }
+        
+
+    } while (menu != 0);
     
 
     return 0;
