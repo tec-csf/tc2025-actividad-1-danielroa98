@@ -30,6 +30,9 @@ int main(int argc, char const *argv[])
 
     int beds, menu = 0, mas = 0, i = 1, nuevos = 5;
 
+    int vacia = 0;
+    int ocupada = 1; 
+
     printf("Cuántos pacientes tiene registrados? ");
     scanf("%d", &beds);
 
@@ -41,7 +44,6 @@ int main(int argc, char const *argv[])
         printf("Inserte los datos del paciente\n");
 
         // sup->nombre = (char *) malloc(sizeof(char) * 30);
-
         printf("Nombre: ");
         scanf("%s", sup->nombre);
 
@@ -56,6 +58,8 @@ int main(int argc, char const *argv[])
 
         printf("Cama en la que se encuentra: ");
         scanf("%d", &sup->camaActual.noCama);
+
+        
     }
     
     do{
