@@ -9,11 +9,11 @@
 #include <string.h>
 
 typedef struct camasHospitales{
-    int noCama;
-    int inUse;
+    int noCama;                     //Número de la cama en la que se encuentra un paciente
+    int inUse;                  //Valor 1 o 0 dependiendo si está en uso
 }cama;
 
-typedef struct{
+typedef struct registroPacientes{
     char nombre[30];
     char apellidoP[30];
     int edad;
@@ -25,10 +25,11 @@ typedef struct{
 int main(int argc, char const *argv[])
 {
 
+    int beds, menu = 0, mas = 0, i = 1, nuevos = 5, bus, bedNo = 0, newPacients, contUsadas = 0, contVacias = 0;
     pacientes * hospital;
     pacientes * sup;
 
-    int beds, menu = 0, mas = 0, i = 1, nuevos = 5;
+    char adios = '-';
 
     int vacia = 0;
     int ocupada = 1; 
@@ -44,11 +45,8 @@ int main(int argc, char const *argv[])
         printf("Inserte los datos del paciente\n");
 
         // sup->nombre = (char *) malloc(sizeof(char) * 30);
-        printf("Nombre: ");
-        scanf("%s", sup->nombre);
-
-        printf("Apellido paterno: ");
-        scanf("%s", sup->apellidoP);
+        printf("Nombre y apellido (paterno): ");
+        scanf("%s %s", sup->nombre, sup->apellidoP);
 
         printf("Edad: ");
         scanf("%d", &sup->edad);
@@ -59,12 +57,14 @@ int main(int argc, char const *argv[])
         printf("Cama en la que se encuentra: ");
         scanf("%d", &sup->camaActual.noCama);
 
-        
+        sup->enUso.inUse=1;
+
+        printf("\n");
     }
     
     do{
 
-    printf("\n\nEscoga una de las siguientes opciones:\n1)Añadir un paciente nuevo\n2)Checar la disponibilidad de una cama\n3)Dar de alta a un paciente\n4)Ver a los pacientes registrados\n5)Ver la disponibilidad de las camas\nPara salir, presione el botón 0\n");
+    printf("\n\nEscoga una de las siguientes opciones:\n1)Añadir un paciente nuevo\n2)Buscar a un paciente\n3)Dar de alta a un paciente\n4)Ver a los pacientes registrados\n5)Ver la disponibilidad de las camas\nPara salir, presione el botón 0\n");
     scanf("%d", &menu);
 
         switch (menu)
@@ -74,62 +74,106 @@ int main(int argc, char const *argv[])
             break;
         
         case 1:
-            printf("\nDesea añadir mas pacientes?\nPresione 0 para no y 1 para si\n");
+            printf("\nCuántos pacientes desea añadir?\n");
             scanf("%d", &mas);
 
-            if (mas == 1){
+            printf("\nAutomaticamente se van a añadir 5 lugares nuevos\n");
 
-                printf("\nAutomaticamente se van a añadir 5 lugares nuevos\n");
+            hospital = (pacientes *)realloc(hospital, sizeof(pacientes) * (beds + nuevos));
 
-                hospital = (pacientes *) realloc(hospital, sizeof(pacientes) * (beds + nuevos));
+            printf("Ingresa el nombre de los pacientes a insertar\n(deja un espacio en blanco si ya no hay pacientes por insertar)\n");
 
-                printf("Ingresa el nombre de los pacientes a insertar\n(deja un espacio en blanco si ya no hay pacientes por insertar)\n");
+            fin = hospital + beds + nuevos;
 
-                fin = hospital + beds + nuevos;
+            for (sup = hospital; sup < fin; ++sup)
+            {
+                printf("\nPaciente #%d\n", i);
 
-                for (sup = hospital + beds; sup < fin; ++sup){
-                    printf("Paciente #%d\n", i);
+                printf("Nombre y apellido (paterno): ");
+                scanf("%s %s", sup->nombre, sup->apellidoP);
 
-                    printf("Nombre: ");
-                    scanf("%s", sup->nombre);
+                printf("Edad: ");
+                scanf("%d", &sup->edad);
 
-                    printf("Apellido paterno: ");
-                    scanf("%s", sup->apellidoP);
+                printf("Número telefónico: ");
+                scanf("%s", sup->noTel);
 
-                    printf("Edad: ");
-                    scanf("%d", &sup->edad);
+                printf("Cama en la que se encuentra: ");
+                scanf("%d", &sup->camaActual.noCama);
 
-                    printf("Número telefónico: ");
-                    scanf("%s", sup->noTel);
+                sup->enUso.inUse = 1;
 
-                    printf("Cama en la que se encuentra: ");
-                    scanf("%d", &sup->camaActual.noCama);
-
-                    i++;
-                }
+                i++;
             }
-            
-            
+
             break;
 
         case 2:
-            printf("Caso 2\n");
+            printf("Las camas registradas son las siguientes:\n");
+
+            for (sup = hospital; sup < fin; ++sup)
+            {
+                printf("%d\n", sup->camaActual.noCama);
+            }
+
+            printf("Escriba el número de la cama que desea buscar para ver si está siendo ocupada\n");
+            scanf("%d", &bus);
+
+            for (sup = hospital; sup < fin; sup++){
+
+                if (sup->enUso.inUse == bus){
+                    printf("\nEsa cama está siendo ocupada por: %s %s\n", sup->nombre, sup->apellidoP);
+                }else{
+                    printf("\nEsa cama está desocupada.\n");
+                }
+                
+            }
+            
             break;
 
         case 3:
-            printf("Caso 3\n");
+            printf("¿Qué paciente desea dar de alta?\n");
+            scanf("%d", &bedNo);
+
+            for (sup = hospital; sup < fin; ++sup){
+                
+                if (sup->camaActual.noCama == bedNo){
+                    
+                    printf("%s", sup->nombre);
+
+                    sup->enUso.inUse = 0;
+                }else{
+                    printf("Por favor inserte un número válido.\n");
+                }
+                
+                
+            }
+            
+
             break;
 
         case 4:
 
             for (sup = hospital; sup < fin; ++sup){
-                printf("Nombre: %s %s \t\t Cama en la que se encuentra:%d \n", sup->nombre, sup->apellidoP, sup->camaActual.noCama);
+                printf("Nombre: %s %s \t\t Cama en la que se encuentra: %d \n", sup->nombre, sup->apellidoP, sup->camaActual.noCama);
             }
             
             break;
 
         case 5:
-            printf("Caso 5\n");
+
+            for (sup = hospital; sup < fin; ++sup){
+                
+                if (sup->enUso.inUse == 1){
+                    contUsadas += 1;
+                }else if (sup->enUso.inUse == 0){
+                    contVacias += 1;
+                }
+                
+            }
+            
+            printf("Hay %d camas ocupadas y %d camas vacías", contUsadas, contVacias);
+
             break;
 
         default:
@@ -139,6 +183,12 @@ int main(int argc, char const *argv[])
         
 
     } while (menu != 0);
+    
+    for (sup = hospital; sup < fin; ++sup){
+        free(sup->nombre);
+        free(sup->apellidoP);
+        free(sup->noTel);
+    }
     
 
     return 0;
