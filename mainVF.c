@@ -24,7 +24,8 @@ int main(int argc, char const *argv[])
     registro = 2,\
     menu = 0, \
     contUsadas = 0, \
-    contVacias = 0;
+    contVacias = 0,\
+    adios = 0;
 
     pacientes * hospital; 
     pacientes * sup;
@@ -72,7 +73,9 @@ int main(int argc, char const *argv[])
 
             registro += 5;
 
-            printf("%d", registro);
+            // printf("%d", registro);
+
+
 
             break;
 
@@ -81,7 +84,25 @@ int main(int argc, char const *argv[])
             break;
 
         case 3:
-            printf("Tercer caso\n");
+            printf("Las camas actualmente ocupadas son las siguientes...\n");
+            
+            for (sup = hospital; sup < fin; ++sup){
+                printf("%d\t", sup->noCama);
+            }
+
+            printf("\nA qué paciente desea darle el alta?");
+            scanf("%d", &adios);
+
+            for (sup = hospital; sup < fin; sup++)
+            {
+            
+                if (sup->noCama == adios){
+                    printf("Dentro del if de prueba");
+                }
+                
+            }
+            
+
             break;
 
         case 4:
