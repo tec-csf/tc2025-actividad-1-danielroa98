@@ -21,7 +21,7 @@ int main(int argc, char const *argv[])
 {
     
     int new = 0,\
-    registro = 0,\
+    registro = 2,\
     menu = 0, \
     contUsadas = 0, \
     contVacias = 0;
@@ -29,8 +29,7 @@ int main(int argc, char const *argv[])
     pacientes * hospital; 
     pacientes * sup;
 
-    printf("\nIngrese la cantidad de pacientes que desea registras:");
-    scanf("%d", &registro);
+    printf("\nPor favor, ingrese los datos de los dos pacientes a continuación.");
 
     hospital = (pacientes *) malloc(sizeof(pacientes)*registro);
 
@@ -57,6 +56,8 @@ int main(int argc, char const *argv[])
         sup->enUso = 1;
     }
 
+    printf("%d", registro);
+
     do{
         
         printf("\nEscoga alguna de las siguientes opciones:\n1) Añadir un paciente nuevo\n2) Buscar a un paciente usando el número de la cama\n3) Dar de alta a un paciente\n4) Ver el registro de pacientes\n5) Ver cuantas camas están disponibles\nO presione el 0 para salir\n");
@@ -68,6 +69,11 @@ int main(int argc, char const *argv[])
 
         case 1:
             printf("Primer caso\n");
+
+            registro += 5;
+
+            printf("%d", registro);
+
             break;
 
         case 2:
