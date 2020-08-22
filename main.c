@@ -34,7 +34,8 @@ int main(int argc, char const *argv[])
         adios = 0,
         bedNo = 0,
         statusO = 0,
-        controlCamas = 0;
+        controlCamas = 0,
+        camasOr = 0;
 
     camas *cuarto = (camas *)malloc(sizeof(camas) * registro);
 
@@ -92,7 +93,17 @@ int main(int argc, char const *argv[])
 
             printf("Ingrese los datos del nuevo paciente.\n");
 
-            if (controlCamas == bedNo)
+            /* if (controlCamas < bedNo)
+            {
+                for (camas * cama = 0; cama < fin; cama++)
+                {
+                    
+                }
+                
+            } */
+            
+
+            /* else */ if (controlCamas == bedNo)
             {
 
                 bedNo += 5;
@@ -101,9 +112,11 @@ int main(int argc, char const *argv[])
 
                 fin = cuarto + bedNo;
                 
+                camasOr = controlCamas;
+
                 for (camas * sup = cuarto + controlCamas; sup < fin; ++sup){
                     sup->enUso = 0;
-                    bedNo++;
+                    controlCamas++;
                     sup->noCama = bedNo;
                 }
                 
@@ -124,21 +137,13 @@ int main(int argc, char const *argv[])
                 printf("Número telefónico: ");
                 scanf("%s", tuPac->noTel);
 
-                controlCamas += 1;
+                camasOr++;
 
-                printf("Se encuentra en la cama: %d", controlCamas);
-
-                sup->noCama = controlCamas;
-
-                sup->enUso = 1;
-                sup->paciente = tuPac;
+                printf("Se encuentra en la cama: %d", camasOr);
 
                 printf("\n");
             }
-            else if (/* condition */)
-            {
-                /* code */
-            }
+            
 
             break;
 
@@ -218,6 +223,9 @@ int main(int argc, char const *argv[])
 
         case 5:
             // printf("Caso 5");
+
+            contUsadas = 0;
+            contVacias = 0;
 
             for (camas *sup = cuarto; sup < fin; ++sup)
             {
